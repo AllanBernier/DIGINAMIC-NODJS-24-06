@@ -6,16 +6,16 @@
  * exemple :
  * {
  *  name: "John",
- *    group: {
- *      name: "admin"
- *    }
+ *  group: {
+ *    name: "admin"
  *  }
+ * }
  *
  * doit renvoyer "admin"
  *
  */
 
-const getGroupName = (obj) => undefined
+const getGroupName = (obj) => obj?.group?.name
 
 
 

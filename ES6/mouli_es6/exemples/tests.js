@@ -89,3 +89,104 @@ const helloworld = () => {
 const helloreturnimplicite = () => (
   "hello"
 )
+
+const sleep = () => new Promise( (resolve) => setTimeout( () => {
+  resolve("Hello")
+} , 2000) )
+
+
+const syncroneFunc = () => {
+  console.log("Start")
+
+  sleep().then( () => {
+    console.log("Hello")
+  })
+
+  console.log("End")
+}
+
+const asyncFunc = async () => {
+  console.log("Start")
+
+  const result = await sleep()
+
+  console.log("End", result)
+}
+
+// asyncFunc()
+
+
+const promiseFunc = () => {
+  return new Promise( ( resolve, reject ) => {
+    setTimeout( () => {
+      const random = Math.random()
+
+      if (random > 0.5){
+        resolve(random)
+      } else {
+        reject( new Error("Erreur dans la promesse") )
+      }
+
+    }, 2000)
+  })
+}
+
+const execFunc = () => {
+
+  promiseFunc()
+  .then((result ) => {
+    console.log("res", result)
+  }).catch( (err) => {
+    console.error(err)
+  })
+
+}
+
+const cathPromise =async () => {
+  try {
+    const result = await promiseFunc()
+    console.log(result)
+  } catch (error) {
+    console.error(error)
+  }
+
+}
+
+// execFunc()
+// cathPromise()
+
+
+const p1 = async () => new Promise( resolve => setTimeout( () => resolve("p1"), 500 ))
+const p2 = async () => new Promise( resolve => setTimeout( () => resolve("p2"), 2000 ))
+const p3 = async () => new Promise( resolve => setTimeout( () => resolve("p3"), 1000 ))
+
+const seq = async () => {
+  try {
+    r1 = await p1()
+    console.log("1")
+    r2 = await p2()
+    console.log("2")
+    r3 = await p3()
+    console.log("3")
+
+    console.log(r1, r2, r3)
+  } catch (err){
+    console.log("err")
+  }
+}
+
+
+const parralelle = async () => {
+  try {
+
+    [r1, r2, r3 ] = await Promise.all([p1(), p2(), p3() ])
+
+    console.log(r1, r2, r3)
+  } catch (err){
+    console.log("err")
+  }
+}
+
+
+
+parralelle()
