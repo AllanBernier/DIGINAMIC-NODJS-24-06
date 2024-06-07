@@ -1,18 +1,26 @@
 
 const controller = {}
+
+const Product = require('../model/Product')
+
 let products = []
 
 
 controller.getAll = (req, res) => {
-  res.send(products)
+  Product.findAll().then((products) => {
+    res.send(products)
+  }).catch((err) => {
+    res.send({message : "Find all failed"})
+  })
 }
 
 controller.getById = (req, res) => {
   const id = req.params.id
-  if (products[id] === undefined ){
-    return res.send("Product not found")
-  }
-  res.send(products[id])
+  Product.find(id).then( (p) => {
+    res.send(p)
+  }).catch((err) => {
+    res.send({message : "Product not found"})
+  })
 }
 
 controller.create = (req, res) => {
