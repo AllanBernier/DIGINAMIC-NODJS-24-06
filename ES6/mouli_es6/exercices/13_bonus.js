@@ -24,7 +24,17 @@ ex: la pomme est rouge et la banane est jaune
 
  */
 
-const countWords = (sentence) => undefined
+const countWords = (sentence) => {
+  const words = sentence.split(" ")
+
+  if (words.length === 1) return {}
+
+  console.log(sentence, words)
+  return words.reduce( (acc, word) => {
+    acc[word] = acc[word] ? acc[word] + 1 : 1 
+    return acc
+  } , {})
+}
 
 console.log(countWords("la pomme est rouge et la banane est jaune"));
 
@@ -33,8 +43,7 @@ Exercice : Trier un objet par valeur
 
 Objectif :
 Écrire une fonction qui prend en entrée un objet et qui retourne un 
-nouvel objet dont les propriétés sont triées en fonction de leurs valeurs, 
-en ordre croissant.
+nouvel objet dont les propriétés sont triées en fonction de leurs valeurs, en ordre croissant.
 
 exemple:
 {
@@ -59,7 +68,11 @@ const obj = {
   "cerises": 2
 }
 
-const sortObjectByValue = (obj) => undefined
+const sortObjectByValue = (obj) => {
+  const entries = Object.entries(obj)
+  entries.sort( (a, b) => a[1] - b[1] )
+  return Object.fromEntries(entries)
+}
 console.log(sortObjectByValue(obj));
 
 
