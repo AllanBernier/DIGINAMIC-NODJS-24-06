@@ -3,8 +3,8 @@
 // $npm i express
 // package.json -> script "start" : "nodee index.js"
 // npm run start
-const bodyParser = require('body-parser')
 const express = require("express")
+const bodyParser = require('body-parser')
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,20 +24,92 @@ app.get("/test", (req, res) => {
   res.send("Testing ...")
 })
 
-app.get("/product/:id", (req, res) => {
+app.get("/task/:id", (req, res) => {
   console.log(req.params.id)
-  res.send("Product : " + req.params.id)
+  res.send("task : " + req.params.id)
 })
 
-app.get("/product", (req, res) => {
+app.get("/task", (req, res) => {
   console.log(req.query.q)
-  res.send("finding product that start with :" + req.query.q)
+  res.send("finding task that start with :" + req.query.q)
 })
 
-app.post("/product", (req,res) => {
+app.post("/task", (req,res) => {
   console.log(req.body)
   res.send(req.body)
 })
+
+
+
+// Author : "firstname", "lastname", "birth_date", "nb_publication", "id"
+// let max_id = 0
+
+
+// name, price, description, quantity
+let products = []
+
+// CRUD
+
+// Create
+// Read
+// Update
+// Delete
+// Get by id
+
+
+app.get("/product", (req, res) => {
+  res.send(products)
+})
+
+app.get("/product/:id", (req, res) => {
+  const id = req.params.id
+  if (products[id] === undefined ){
+    return res.send("Product not found")
+  }
+  res.send(products[id])
+})
+
+
+app.post("/product", (req, res) => {
+  const {name, price, description, quantity} = req.body
+  const product = { name, price, description, quantity }
+  products.push({product})
+
+  res.send({product : product, message: "product created"})
+})
+
+app.put("/product/:id", (req, res) => {
+  const id = req.params.id
+  const {name, price, description, quantity} = req.body
+  const product = { name, price, description, quantity }
+
+  if (products[id] === undefined ){
+    return res.send("Product not found")
+  }
+  
+  products[id] = product
+  res.send({product : product, message: "product updated !" })
+
+})
+
+app.delete("/product/:id", (req, res) => {
+  const id = req.params.id
+  if (products[id] === undefined ){
+    return res.send("Product not found")
+  }
+  products.splice(id, 1)
+  res.send({message : "product deleted !"})
+})
+
+
+
+
+
+
+
+
+
+
 
 
 
