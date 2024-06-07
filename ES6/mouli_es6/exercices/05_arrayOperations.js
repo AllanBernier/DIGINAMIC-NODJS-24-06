@@ -10,20 +10,20 @@
  * 
   */
 
-const multiplyByTwo = (array) => undefined
+const multiplyByTwo = (array) => array.map( (value) => value * 2 )
 
 
 /**
  * Utiliser la fonction .filter sur le tableau passé en paramètre
  * retourne un nouveau tableau avec uniquement les nom qui commencent par la lettre "A"
- * 
+ * ['Adam', 'Tom', ...]
  * contraintes: 
  *   - Les mots clées for, while, do while sont interdits
  *   - les mots clées function et return sont interdits
  *   - Vous ne pouvez pas utiliser de variable (autre que l'argument de la fonction)
   */
 
-const filterNameStartByA = (array) => undefined
+const filterNameStartByA = (array) => array.filter( (value) => value[0] === "A")
 // 5 == "5" // true
 // 5 ==="5" // false
 
@@ -39,7 +39,7 @@ const filterNameStartByA = (array) => undefined
 
 const array = [1,2,3,4,5]
 
-const sum = (array) => undefined
+const sum = (array) => array.reduce( (acc, value) =>  acc + value, 0)
 /**
  * Utiliser la fonction .find sur le tableau passé en paramètre
  * retourne l'utilisateur qui a l'id passé en 2e paramètre
@@ -59,7 +59,7 @@ const sum = (array) => undefined
  *   - Vous ne pouvez pas utiliser de variable (autre que l'argument de la fonction)
   */
 
-const findUserById = (array, id) => undefined
+const findUserById = (array, id) => array.find( (value) => value.id === id).name
 
 
 module.exports = {multiplyByTwo, filterNameStartByA, sum, findUserById};
