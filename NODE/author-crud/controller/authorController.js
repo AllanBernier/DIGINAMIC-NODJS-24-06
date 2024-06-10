@@ -1,47 +1,66 @@
+const Author = require("../model/Author")
+
 const controller = {}
-let authors = []
-let max_id = 0
 
 
 controller.getAll = (req, res) => {
-  res.send(authors)
+  Author.findAll()
+  .then( (authors) => {
+    return res.send(authors)
+  }).catch((error) => {
+    res.send({message : "Failed fetching authors", error})
+  })
 }
 
 controller.getById = (req, res) => {
   const id = req.params.id
-  const author = authors.find( (author) => author.id == id )
-  res.json( author === undefined ? {message : "Author not found"} : author )
+  
+  Author.findByPk(id)
+  .then( (author) => {
+    if (!author) {
+      return res.send({message : "Author not found"})
+    }
+    return res.send(author)
+  }).catch((error) => {
+    res.send({message : "Failed fetching author", error})
+  })
 }
 
 controller.create = (req, res) => {
-  const {firstname, lastname, birth_date, nb_publication} = req.body
-  let current_id = max_id++
-  const author = { firstname, lastname, birth_date, nb_publication, id : current_id }
-  authors.push(author)
+  const {firstName, lastName, birthDate, nbPublication} = req.body
+  const author = { firstName, lastName, birthDate, nbPublication }
 
-  res.send(author)
+  Author.create(author)
+  .then( (author) => {
+    return res.send({ author, message : "Author created !" })
+  }).catch((error) => {
+    res.send({message : "Failed creating author", error})
+  })
+
 }
 
 controller.update = (req, res) => {
   const id = req.params.id
-  let index = authors.findIndex( (author) => author.id == id )
-  const {firstname, lastname, birth_date, nb_publication} = req.body
+  const {firstName, lastName, birthDate, nbPublication} = req.body
+  const author = { firstName, lastName, birthDate, nbPublication }
 
-  if (index === -1) {
-    return res.send("Author not found")
-  }
-  authors[index] = {...authors[index], firstname, lastname, birth_date, nb_publication}
-  res.send({ author : authors[index] , message : "Author updated !"})
+  Author.update(author, { where : { id }})
+  .then( (author) => {
+    return res.send({ author, message : "Author updated !" })
+  }).catch((error) => {
+    res.send({message : "Failed updating author", error})
+  })
 }
 
 controller.delete = (req, res) => {
   const id = req.params.id
-  const index = authors.findIndex( (author) => author.id == id )
-  if (index == -1){
-    res.send("Author not found")
-  }
-  authors.splice(index, 1)
-  res.send({message: "Author deleted !"})
+
+  Author.destroy({ where : { id }})
+  .then( (author) => {
+    return res.send({ author, message : "Author deleted !" })
+  }).catch((error) => {
+    res.send({message : "Failed deleting author", error})
+  })
 }
 
 

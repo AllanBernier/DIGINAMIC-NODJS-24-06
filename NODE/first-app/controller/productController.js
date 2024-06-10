@@ -1,7 +1,6 @@
 
 const controller = {}
 
-const { where } = require('sequelize')
 const Product = require('../model/Product')
 
 let products = []
@@ -17,7 +16,10 @@ controller.getAll = (req, res) => {
 
 controller.getById = (req, res) => {
   const id = req.params.id
-  Product.find(id).then( (p) => {
+  Product.findByPk(id).then( (p) => {
+    if (!p) {
+      return res.send({message : "Product not found"})
+    }
     res.send(p)
   }).catch((err) => {
     res.send({message : "Product not found"})
@@ -35,14 +37,13 @@ controller.create = (req, res) => {
   .catch( (err) => {
     return res.send({message: "Error creating product"})
   })
-  
 }
 
 controller.update = (req, res) => {
   const id = req.params.id
   const {name, price, description, quantity} = req.body
   const product = { name, price, description, quantity }
-
+  
   Product.update(product, { where : { id : id}}).then( (queryResult) => {
     res.send({message: "Product updated" , result : queryResult })
   }).catch( (error) => {
