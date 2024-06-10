@@ -27,10 +27,7 @@ controller.getById = (req, res) => {
 }
 
 controller.create = (req, res) => {
-  const {name, price, description, quantity} = req.body
-  const product = { name, price, description, quantity }
-
-  Product.create(product)
+  Product.create(req.product)
   .then( (p) => {
     return res.send({product : p, message: "product created"})
   } )
@@ -41,10 +38,8 @@ controller.create = (req, res) => {
 
 controller.update = (req, res) => {
   const id = req.params.id
-  const {name, price, description, quantity} = req.body
-  const product = { name, price, description, quantity }
   
-  Product.update(product, { where : { id : id}}).then( (queryResult) => {
+  Product.update(req.product, { where : { id : id}}).then( (queryResult) => {
     res.send({message: "Product updated" , result : queryResult })
   }).catch( (error) => {
     res.send({message : "Product not updated", error})

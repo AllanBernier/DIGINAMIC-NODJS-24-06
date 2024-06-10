@@ -15,33 +15,18 @@ app.listen(3000, () => {
 
 
 
-/*
-app.get("/", (req, res) => {
-  res.send("Hello world !")
+const ensureHaveId = (req, res, next) => {
+  req.params.id = parseInt(req.params.id);
+
+  if (isNaN(req.params.id)){
+    return res.send({errors : { id: "Must be an integer"}})
+  }
+  next()
+}
+
+app.get("/hello/:id", ensureHaveId,  (req, res) => {
+  res.send(`Hello ${req.params.id}`)
 })
-
-app.get("/test", (req, res) => {
-  res.send("Testing ...")
-})
-
-app.get("/task/:id", (req, res) => {
-  console.log(req.params.id)
-  res.send("task : " + req.params.id)
-})
-
-app.get("/task", (req, res) => {
-  console.log(req.query.q)
-  res.send("finding task that start with :" + req.query.q)
-})
-
-app.post("/task", (req,res) => {
-  console.log(req.body)
-  res.send(req.body)
-})
-*/
-
-
-
 
 
 
