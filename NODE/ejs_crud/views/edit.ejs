@@ -1,0 +1,27 @@
+<%- include("_header") %>
+
+<form action="/product/edit/<%= typeof product !== undefined ? product.id : '' %>" method="post">
+
+
+  <label for="name">Name</label>
+  <input type="text" name="name" id="name" value="<%= typeof product !== undefined ? product.name : '' %>">
+  <br>
+
+  <label for="price">Price</label>
+  <input type="number" name="price" id="price" value="<%= typeof product !== undefined ? product.price : '' %>">
+  <br>
+
+  <label for="description">Description</label>
+  <input type="text" name="description" id="description" value="<%= typeof product !== undefined ? product.description : '' %>">
+  <br>
+
+  <label for="quantity">Quantity</label>
+  <input type="number" name="quantity" id="quantity" value="<%= typeof product !== undefined ? product.quantity : '' %>">
+  <br>
+
+
+  <button type="submit">Submit</button>
+
+</form>
+
+<%- include("_footer") %>

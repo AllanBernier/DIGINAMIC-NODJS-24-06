@@ -1,11 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1> Hello from ejs template </h1>
-</body>
-</html>
+<%- include("_header") %>
+<h1> Product list</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>
+        <a href="/product/create">Create </a> 
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% products.forEach(product => { %>
+    <tr>
+      <td><%= product.id %></td>
+      <td><%= product.name %></td>
+      <td><%= product.description %></td>
+      <td><%= product.price %></td>
+      <td><%= product.quantity %></td>
+      <td>
+        <a href="product/edit/<%= product.id %>">Edit </a> 
+        <form action="/product/delete/<%= product.id %>" method="post">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+      
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include("_footer") %>
