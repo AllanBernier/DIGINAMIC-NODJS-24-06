@@ -1,6 +1,7 @@
 
 const controller = {}
 
+const { where } = require('sequelize')
 const Product = require('../model/Product')
 
 let products = []
@@ -42,21 +43,21 @@ controller.update = (req, res) => {
   const {name, price, description, quantity} = req.body
   const product = { name, price, description, quantity }
 
-  if (products[id] === undefined ){
-    return res.send("Product not found")
-  }
-  
-  products[id] = product
-  res.send({product : product, message: "product updated !" })
+  Product.update(product, { where : { id : id}}).then( (queryResult) => {
+    res.send({message: "Product updated" , result : queryResult })
+  }).catch( (error) => {
+    res.send({message : "Product not updated", error})
+  })
 }
 
 controller.delete = (req, res) => {
   const id = req.params.id
-  if (products[id] === undefined ){
-    return res.send("Product not found")
-  }
-  products.splice(id, 1)
-  res.send({message : "product deleted !"})
+
+  Product.destroy({ where : { id : id}}).then((queryResult) => {
+    res.send({message : "Product deleted !", result : queryResult})
+  }).catch( error => {
+    res.send({message : "Product not deleted", error})
+  })
 }
 
 module.exports = controller
