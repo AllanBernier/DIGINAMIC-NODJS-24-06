@@ -9,4 +9,4 @@ const Product = db.define('Product', {
   quantity: DataTypes.NUMBER
 })
 
-module.export = Product
+module.exports = Product

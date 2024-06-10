@@ -7,4 +7,4 @@ const db = new sequelize({
 
 db.sync()
 
-module.export = db
+module.exports = db

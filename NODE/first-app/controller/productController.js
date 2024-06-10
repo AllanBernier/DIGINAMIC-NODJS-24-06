@@ -26,9 +26,15 @@ controller.getById = (req, res) => {
 controller.create = (req, res) => {
   const {name, price, description, quantity} = req.body
   const product = { name, price, description, quantity }
-  products.push(product)
 
-  res.send({product : product, message: "product created"})
+  Product.create(product)
+  .then( (p) => {
+    return res.send({product : p, message: "product created"})
+  } )
+  .catch( (err) => {
+    return res.send({message: "Error creating product"})
+  })
+  
 }
 
 controller.update = (req, res) => {
