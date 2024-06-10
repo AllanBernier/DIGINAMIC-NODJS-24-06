@@ -8,9 +8,9 @@ let products = []
 
 controller.getAll = (req, res) => {
   Product.findAll().then((products) => {
-    res.send(products)
+    res.status(200).send(products)
   }).catch((err) => {
-    res.send({message : "Find all failed"})
+    res.status(503).send({message : "Find all failed"})
   })
 }
 
@@ -18,11 +18,11 @@ controller.getById = (req, res) => {
   const id = req.params.id
   Product.findByPk(id).then( (p) => {
     if (!p) {
-      return res.send({message : "Product not found"})
+      return res.status(200).send({message : "Product not found"})
     }
     res.send(p)
   }).catch((err) => {
-    res.send({message : "Product not found"})
+    res.status(400).send({message : "Product not found"})
   })
 }
 
@@ -33,10 +33,10 @@ controller.create = (req, res) => {
 
   Product.create(product)
   .then( (p) => {
-    return res.send({product : p, message: "product created"})
+    return res.status(201).send({product : p, message: "product created"})
   } )
   .catch( (err) => {
-    return res.send({message: "Error creating product", error : err.errors})
+    return res.status(400).send({message: "Error creating product", error : err.errors})
   })
 }
 
@@ -46,9 +46,9 @@ controller.update = (req, res) => {
   const product = {name, price, description, quantity}
 
   Product.update(product, { where : { id : id}}).then( (queryResult) => {
-    res.send({message: "Product updated" , result : queryResult })
+    res.status(200).send({message: "Product updated" , result : queryResult })
   }).catch( (error) => {
-    res.send({message : "Product not updated", error})
+    res.status(400).send({message : "Product not updated", error})
   })
 }
 
@@ -56,9 +56,11 @@ controller.delete = (req, res) => {
   const id = req.params.id
 
   Product.destroy({ where : { id : id}}).then((queryResult) => {
-    res.send({message : "Product deleted !", result : queryResult})
+    if (queryResult === 0) return res.status(400).send('Product not found')
+      
+    res.status(200).send({message : "Product deleted !", result : queryResult})
   }).catch( error => {
-    res.send({message : "Product not deleted", error})
+    res.status(400).send({message : "Product not deleted", error})
   })
 }
 

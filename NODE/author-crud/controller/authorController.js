@@ -2,13 +2,12 @@ const Author = require("../model/Author")
 
 const controller = {}
 
-
 controller.getAll = (req, res) => {
   Author.findAll()
   .then( (authors) => {
     return res.send(authors)
   }).catch((error) => {
-    res.send({message : "Failed fetching authors", error})
+    res.status(400).send({message : "Failed fetching authors", error})
   })
 }
 
@@ -20,9 +19,9 @@ controller.getById = (req, res) => {
     if (!author) {
       return res.send({message : "Author not found"})
     }
-    return res.send(author)
+    return res.status(200).send(author)
   }).catch((error) => {
-    res.send({message : "Failed fetching author", error})
+    res.status(400).send({message : "Failed fetching author", error})
   })
 }
 
@@ -32,9 +31,9 @@ controller.create = (req, res) => {
 
   Author.create(author)
   .then( (author) => {
-    return res.send({ author, message : "Author created !" })
+    return res.status(201).send({ author, message : "Author created !" })
   }).catch((error) => {
-    res.send({message : "Failed creating author", error})
+    res.status(400).send({message : "Failed creating author", error})
   })
 
 }
@@ -46,9 +45,9 @@ controller.update = (req, res) => {
 
   Author.update(author, { where : { id }})
   .then( (author) => {
-    return res.send({ author, message : "Author updated !" })
+    return res.status(200).send({ author, message : "Author updated !" })
   }).catch((error) => {
-    res.send({message : "Failed updating author", error})
+    res.status(400).send({message : "Failed updating author", error})
   })
 }
 
@@ -57,9 +56,9 @@ controller.delete = (req, res) => {
 
   Author.destroy({ where : { id }})
   .then( (author) => {
-    return res.send({ author, message : "Author deleted !" })
+    return res.status(200).send({ author, message : "Author deleted !" })
   }).catch((error) => {
-    res.send({message : "Failed deleting author", error})
+    res.status(400).send({message : "Failed deleting author", error})
   })
 }
 

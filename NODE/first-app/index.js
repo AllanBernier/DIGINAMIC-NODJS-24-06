@@ -2,6 +2,11 @@ const express = require("express")
 const bodyParser = require('body-parser')
 const app = express()
 
+require("dotenv").config()
+
+const PORT = process.env.SERVER_PORT || 3001
+
+
 const productRouter = require("./router/productRouter")
 
 
@@ -9,8 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(productRouter)
 
-app.listen(3000, () => {
-  console.log("App started on port 3000")
+app.listen(PORT, () => {
+  console.log(`App started on port ${PORT}`)
 })
 
 
