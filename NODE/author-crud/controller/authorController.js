@@ -1,5 +1,4 @@
 const Author = require("../model/Author")
-
 const controller = {}
 
 controller.getAll = (req, res) => {
@@ -26,7 +25,12 @@ controller.getById = (req, res) => {
 }
 
 controller.create = (req, res) => {
-  const {firstName, lastName, birthDate, nbPublication} = req.body
+  
+  if (!req.form.isValid){
+    res.status(400).json({ message : "Invalid Form"})
+  }
+  
+  const {firstName, lastName, birthDate, nbPublication} = req.form
   const author = { firstName, lastName, birthDate, nbPublication }
 
   Author.create(author)
@@ -39,8 +43,13 @@ controller.create = (req, res) => {
 }
 
 controller.update = (req, res) => {
+
+  if (!req.form.isValid){
+    res.status(400).json({ message : "Invalid Form"})
+  }
+
   const id = req.params.id
-  const {firstName, lastName, birthDate, nbPublication} = req.body
+  const {firstName, lastName, birthDate, nbPublication} = req.form
   const author = { firstName, lastName, birthDate, nbPublication }
 
   Author.update(author, { where : { id }})
