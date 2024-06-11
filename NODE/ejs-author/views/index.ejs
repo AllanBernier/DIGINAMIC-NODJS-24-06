@@ -1,0 +1,38 @@
+<%- include('_header') %>
+
+<h1>Index Author</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>BirthDate</th>
+      <th>Nombre publications</th>
+      <th>
+        <a href="/author/create">Create</a>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% authors.forEach(author => { %>
+      <tr>
+        <td><%= author.id %></td>
+        <td><%= author.firstName %></td>
+        <td><%= author.lastName %></td>
+        <td><%= new Date(author.birthDate).toLocaleDateString("fr-FR") %></td>
+        <td><%= author.nbPublication %></td>
+        <td>
+          <a href="/author/edit/<%= author.id %>">Edit</a>
+          <form action="/author/delete/<%= author.id %>" method="post">
+            <button type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+    </tbody>
+</table>
+
+<%- include('_footer') %>

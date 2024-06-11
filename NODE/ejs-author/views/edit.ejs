@@ -1,0 +1,13 @@
+<%- include('_header') %>
+
+<h1>Edit Author</h1>
+
+<form action="/author/edit/<%= typeof author != 'undefined' ? author?.id : '' %>" method="post">
+
+  <%- include('_authorForm') %>
+
+  <button type="submit">Create</button>
+
+</form>
+
+<%- include('_footer') %>

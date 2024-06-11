@@ -1,0 +1,19 @@
+  <div>
+    <label for="firstName">FirstName</label>
+    <input type="text" id="firstName" name="firstName" value="<%= typeof author != 'undefined' ? author?.firstName : '' %>" >
+  </div>
+
+  <div>
+    <label for="lastName">LastName</label>
+    <input type="text" id="lastName" name="lastName" value="<%= typeof author != 'undefined' ? author?.lastName : '' %>">
+  </div>
+
+  <div>
+    <label for="birthDate">BirthDate</label>
+    <input type="date" id="birthDate" name="birthDate" value="<%= typeof author != 'undefined' ? author.formated_birthDate : '' %>">
+  </div>
+
+  <div>
+    <label for="nbPublication">Nombre publications</label>
+    <input type="number" id="nbPublication" name="nbPublication" value="<%= typeof author != 'undefined' ? author?.nbPublication : '' %>">
+  </div>
