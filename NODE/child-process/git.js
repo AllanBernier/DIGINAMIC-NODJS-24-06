@@ -34,10 +34,6 @@ add.on("exit", () => {
       console.log(msg)
       console.log("Pushed")
     })
-
-
-  })
-
-  
+  })  
 })
 
