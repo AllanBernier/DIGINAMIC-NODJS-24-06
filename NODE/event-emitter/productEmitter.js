@@ -1,6 +1,5 @@
 const EventEmitter = require("events")
 
-
 class ProductService extends EventEmitter{
 
   constructor() {
