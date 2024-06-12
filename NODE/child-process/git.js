@@ -30,7 +30,7 @@ add.on("exit", () => {
 
     const push = spawn("git", ['push'])
 
-    push.on("message", (msg) => {
+    push.on("exit", (msg) => {
       console.log(msg)
       console.log("Pushed")
     })
