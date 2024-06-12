@@ -25,7 +25,7 @@ const divide = (a,b) => {
 
 const modulo = (a,b) => {
   return a%b
-}
+} 
 
 const reverseString = (str) => {
   return str.split('').reverse().join('')
